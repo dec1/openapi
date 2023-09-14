@@ -18,7 +18,7 @@ paths:
         \ <br> call.respondText(\"Hello test $p1\") <br> } <br> post<Customer>(){"
       requestBody:
         content:
-          '*/*':
+          'application/json':
             schema:
               $ref: "#/components/schemas/Customer"
         required: true
