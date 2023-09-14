@@ -7,6 +7,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.serialization.kotlinx.json.*
+import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.resources.Resources
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -17,26 +18,25 @@ import kotlinx.serialization.json.Json
 data class Customer(val name: String? = null, val age: Int? = null)
 
 fun Application.configureRouting() {
-
     //install(Resources)
     routing {
         //openAPI(path="openapi", swaggerFile = "openapi/documentation.yaml")
 
-//        get("/") {
-//            val n =  call.parameters["name"]
-//            print(n)
-//            if (call.request.queryParameters["price"] == "asc") {
-//                print("asc")
-//                // Show products from the lowest price to the highest
-//            }
-//            call.respondText("Hello $n")
-//        }
-//        get("/qstr") {
-//            //val ct = call.request.contentType()
-//            val p1 : Int?  =  call.parameters["my_p1"]?.toIntOrNull()
-//            val p2 : Int? =  call.parameters["my_p2"]?.toIntOrNull()
-//            call.respondText("Hello test $p1")
-//        }
+        get("/") {
+            val n =  call.parameters["name"]
+            print(n)
+            if (call.request.queryParameters["price"] == "asc") {
+                print("asc")
+                // Show products from the lowest price to the highest
+            }
+            call.respondText("Hello $n")
+        }
+        get("/qstr") {
+            //val ct = call.request.contentType()
+            val p1 : Int?  =  call.parameters["my_p1"]?.toIntOrNull()
+            val p2 : Int? =  call.parameters["my_p2"]?.toIntOrNull()
+            call.respondText("Hello test $p1")
+        }
         //post<Customer>(){
         post("/customer") {
 //            println(call.request.headers.getAll("Content-Type")

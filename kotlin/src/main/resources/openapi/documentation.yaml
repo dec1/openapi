@@ -6,16 +6,34 @@ info:
 servers:
 - url: "https://kor_openapi"
 paths:
+  /:
+    get:
+      description: "openAPI(path=\"openapi\", swaggerFile = \"openapi/documentation.yaml\"\
+        )"
+      parameters:
+      - name: "name"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      - name: "price"
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: ""
   /customer:
     post:
-      description: "openAPI(path=\"openapi\", swaggerFile = \"openapi/documentation.yaml\"\
-        ) <br> get(\"/\") { <br> val n =  call.parameters[\"name\"] <br> print(n)\
-        \ <br> if (call.request.queryParameters[\"price\"] == \"asc\") { <br> print(\"\
-        asc\") <br> // Show products from the lowest price to the highest <br> } <br>\
-        \ call.respondText(\"Hello $n\") <br> } <br> get(\"/qstr\") { <br> //val ct\
-        \ = call.request.contentType() <br> val p1 : Int?  =  call.parameters[\"my_p1\"\
-        ]?.toIntOrNull() <br> val p2 : Int? =  call.parameters[\"my_p2\"]?.toIntOrNull()\
-        \ <br> call.respondText(\"Hello test $p1\") <br> } <br> post<Customer>(){"
+      description: "post<Customer>(){"
       requestBody:
         content:
           'application/json':
@@ -40,6 +58,30 @@ paths:
                   value: "General exception"
         "201":
           description: "Created"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: ""
+  /qstr:
+    get:
+      description: ""
+      parameters:
+      - name: "my_p1"
+        in: "query"
+        required: false
+        schema:
+          type: "integer"
+      - name: "my_p2"
+        in: "query"
+        required: false
+        schema:
+          type: "integer"
+      responses:
+        "200":
+          description: "OK"
           content:
             text/plain:
               schema:

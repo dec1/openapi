@@ -15,6 +15,7 @@ import json
 from hypothesis import settings, Phase
 from twisted.python.util import println
 
+
 path_dir = "/Users/declan/Documents/zone/low/kotlin/open_api/kotlin/src/main/resources/openapi/"
 path_yaml = path_dir + "documentation.yaml"
 # path_json = path_dir + "documentation.json"
@@ -32,7 +33,7 @@ def before_call(context, case):
 
 
 
-@settings(max_examples=10)
+@settings(max_examples=100)
 @schema.parametrize()
 def test_api(case):
     case.call_and_validate()
