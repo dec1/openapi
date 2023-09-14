@@ -34,15 +34,18 @@ paths:
   /customer:
     post:
       description: ""
-      requestBody:
-        content:
-          '*/*':
-            schema:
-              $ref: "#/components/schemas/Customer"
-        required: true
       responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: "General exception"
         "201":
-          description: "Created"
+          description: "Created <br> val cust = call.receive<Customer>()"
           content:
             text/plain:
               schema:
@@ -54,7 +57,12 @@ paths:
     get:
       description: ""
       parameters:
-      - name: "p4"
+      - name: "my_p1"
+        in: "query"
+        required: false
+        schema:
+          type: "integer"
+      - name: "my_p2"
         in: "query"
         required: false
         schema:
@@ -68,14 +76,4 @@ paths:
                 type: "string"
               examples:
                 Example#1:
-                  value: "Hello test}"
-components:
-  schemas:
-    Customer:
-      type: "object"
-      properties:
-        name:
-          type: "string"
-        age:
-          type: "integer"
-          format: "int32"
+                  value: ""
