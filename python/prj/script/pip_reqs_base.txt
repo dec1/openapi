@@ -1,0 +1,7 @@
+# direct dependencies used by project
+#  for snapshot of all (recursive) dependencies in precise versions tested - see
+#    pip_reqs_export() -> "pip_reqs.txt"
+
+
+schemathesis
+twisted

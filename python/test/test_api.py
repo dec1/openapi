@@ -1,23 +1,20 @@
-import yaml
-import requests
-import pandas as pd
+
 
 # https://schemathesis.readthedocs.io/en/
 
 #def tst_client2():
 
+from src._man_file import ManFile
 import schemathesis
 
-
-
-import yaml
-import json
 from hypothesis import settings, Phase
 from twisted.python.util import println
 
+path_tst = ManFile.dir_path_root()
 
-path_dir = "/Users/declan/Documents/zone/low/kotlin/open_api/kotlin/src/main/resources/openapi/"
-path_yaml = path_dir + "documentation.yaml"
+# path_dir = "/Users/declan/Documents/zone/low/kotlin/open_api/kotlin/src/main/resources/openapi/"
+path_yaml = ManFile.file_path_openapi_spec("documentation.yaml")
+
 # path_json = path_dir + "documentation.json"
 # with open(path_yaml, 'r') as yaml_file:
 #     yaml_data = yaml.safe_load(yaml_file)
