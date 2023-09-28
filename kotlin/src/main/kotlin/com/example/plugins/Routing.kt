@@ -12,12 +12,26 @@ import io.ktor.server.resources.Resources
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
+//-------------------------------------------
 import io.github.smiley4.ktorswaggerui.dsl.get
+import io.github.smiley4.ktorswaggerui.dsl.post
 
 //@
 // ("/customer")
 @Serializable
 data class Customer(val name: String? = null, val age: Int? = null)
+
+@Serializable
+data class MathRequest(
+    val a: Int,
+    val b: Int
+)
+
+@Serializable
+data class MathResult(
+    val value: Int
+)
+
 
 fun Application.configureRouting() {
     //install(Resources)
@@ -51,7 +65,40 @@ fun Application.configureRouting() {
             call.respondText("Hello World!")
         }
         //----------------------------------------------------------
+        post("math/{operation}", {
+            tags = listOf("test")
+            description = "Performs the given operation on the given values and returns the result"
+            request {
+                pathParameter<String>("operation") {
+                    description = "the math operation to perform. Either 'add' or 'sub'"
+                }
+                body<MathRequest>()
+            }
+            response {
+                HttpStatusCode.OK to {
+                    description = "The operation was successful"
+                    body<MathResult> {
+                        description = "The result of the operation"
+                    }
+                }
+                HttpStatusCode.BadRequest to {
+                    description = "An invalid operation was provided"
+                }
+            }
+        }) {
+            val operation = call.parameters["operation"]!!
+            call.receive<MathRequest>().let { request ->
+                when (operation) {
+                    "add" -> call.respond(HttpStatusCode.OK, MathResult(request.a + request.b))
+                    "sub" -> call.respond(HttpStatusCode.OK, MathResult(request.a - request.b))
+                    else -> call.respond(HttpStatusCode.BadRequest, Unit)
+                }
+            }
+        }
 
+
+
+        ///_--------------------------------------------------------
         get("/qstr") {
             //val ct = call.request.contentType()
             val p1 : Int?  =  call.parameters["my_p1"]?.toIntOrNull()
