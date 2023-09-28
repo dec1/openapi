@@ -12,6 +12,8 @@ import io.ktor.server.resources.Resources
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
+import io.github.smiley4.ktorswaggerui.dsl.get
+
 //@
 // ("/customer")
 @Serializable
@@ -31,6 +33,25 @@ fun Application.configureRouting() {
             }
             call.respondText("Hello $n")
         }
+
+        //----------------------------------------------------------
+        // documented "get"-route
+        get("hello", {
+            description = "Hello World Endpoint."
+            response {
+                HttpStatusCode.OK to {
+                    description = "Successful Request"
+                    body<String> { description = "the response" }
+                }
+                HttpStatusCode.InternalServerError to {
+                    description = "Something unexpected happened"
+                }
+            }
+        }) {
+            call.respondText("Hello World!")
+        }
+        //----------------------------------------------------------
+
         get("/qstr") {
             //val ct = call.request.contentType()
             val p1 : Int?  =  call.parameters["my_p1"]?.toIntOrNull()
