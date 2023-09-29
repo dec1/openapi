@@ -66,7 +66,7 @@ fun Application.configureRouting() {
         }
         //----------------------------------------------------------
         post("math/{operation}", {
-            tags = listOf("test")
+           // tags = listOf("test")
             description = "Performs the given operation on the given values and returns the result"
             request {
                 pathParameter<String>("operation") {
