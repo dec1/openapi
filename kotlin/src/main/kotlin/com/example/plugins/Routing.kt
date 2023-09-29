@@ -66,7 +66,7 @@ fun Application.configureRouting() {
         //curl -X "POST" "http://localhost:8080/math/add" -H "accept: application/json" -H "Content-Type: application/json" -d "{\"a\": 10, \"b\": 9}"
         // {"value":19}
         post("math/{operation}", {
-            tags = listOf("test")
+           // tags = listOf("test")
             description = "Performs the given operation on the given values and returns the result"
             request {
                 pathParameter<String>("operation") {
