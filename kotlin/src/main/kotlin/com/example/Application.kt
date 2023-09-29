@@ -1,14 +1,14 @@
 package com.example
 
-import com.example.plugins.*
-import io.ktor.server.application.*
-import io.ktor.server.engine.*
-import io.ktor.server.netty.*
-import io.ktor.server.plugins.contentnegotiation.*
+import com.example.plugins.configureRouting
 import io.ktor.serialization.kotlinx.json.*
+import io.ktor.server.application.*
+import io.ktor.server.plugins.contentnegotiation.*
 
 
 import io.github.smiley4.ktorswaggerui.SwaggerUI
+import io.ktor.server.engine.*
+import io.ktor.server.netty.*
 
 fun main() {
     embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module)

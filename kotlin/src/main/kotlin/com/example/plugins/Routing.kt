@@ -1,20 +1,18 @@
 package com.example.plugins
 
-import io.ktor.http.*
-import io.ktor.resources.*
-import io.ktor.server.application.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
+import com.example.plugins.configureRouting
 import io.ktor.serialization.kotlinx.json.*
+import io.ktor.server.application.*
 import io.ktor.server.plugins.contentnegotiation.*
-import io.ktor.server.resources.Resources
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.Json
 
 //-------------------------------------------
 import io.github.smiley4.ktorswaggerui.dsl.get
 import io.github.smiley4.ktorswaggerui.dsl.post
+import io.ktor.http.*
+import io.ktor.server.request.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
+import kotlinx.serialization.Serializable
 
 //@
 // ("/customer")
@@ -65,6 +63,8 @@ fun Application.configureRouting() {
             call.respondText("Hello World!")
         }
         //----------------------------------------------------------
+        //curl -X "POST" "http://localhost:8080/math/add" -H "accept: application/json" -H "Content-Type: application/json" -d "{\"a\": 10, \"b\": 9}"
+        // {"value":19}
         post("math/{operation}", {
             tags = listOf("test")
             description = "Performs the given operation on the given values and returns the result"

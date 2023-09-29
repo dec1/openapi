@@ -1,5 +1,5 @@
 
-CALL .\venv\Scripts\pip freeze > pip_reqs.txt
+CALL ..\venv\Scripts\pip freeze > pip_reqs.txt
 
 
  
