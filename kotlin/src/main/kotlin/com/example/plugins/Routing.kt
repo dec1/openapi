@@ -106,7 +106,24 @@ fun Application.configureRouting() {
             call.respondText("Hello test $p1")
         }
         //post<Customer>(){
-        post("/customer") {
+        post("/customer", {
+            description = "Submit new customer details"
+            request {
+                body<Customer>()
+            }
+            response {
+                HttpStatusCode.OK to {
+                    description = "New customer  submission was successful"
+                    body<String> {
+                        description = "Summary of customer created"
+                    }
+                }
+                HttpStatusCode.BadRequest to {
+                    description = "Customer could not be created"
+                }
+            }
+
+        } ) {
 //            println(call.request.headers.getAll("Content-Type")
             //val payload = call.receiveText().takeIf { it.isNotBlank() } ?: "{}"
 
