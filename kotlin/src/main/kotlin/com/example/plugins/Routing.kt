@@ -30,7 +30,13 @@ data class MathResult(
     val value: Int
 )
 
+enum class Color {
+    RED, GREEN, BLUE
+}
 
+enum class MathOp {
+    add, sub
+}
 fun Application.configureRouting() {
     //install(Resources)
     routing {
@@ -69,13 +75,41 @@ fun Application.configureRouting() {
         //----------------------------------------------------------
         //curl -X "POST" "http://localhost:8080/math/add" -H "accept: application/json" -H "Content-Type: application/json" -d "{\"a\": 10, \"b\": 9}"
         // {"value":19}
+
+        post("echo/{color}", {
+            request {
+                pathParameter<Color>("color") {
+                    example = Color.BLUE
+                }
+            }
+            response {
+                HttpStatusCode.OK to {
+                    body<String>()
+                }
+                HttpStatusCode.BadRequest to {
+                    description = "Something unexpected happened"
+                }
+            }
+        }) {
+            try{
+                call.respond(HttpStatusCode.OK, Color.valueOf(call.parameters["color"]!!).toString())
+            }
+            catch (ex: Exception) {
+                call.respond(HttpStatusCode.BadRequest, "General exception")
+            }
+        }
+
+
         post("math/{operation}", {
            // tags = listOf("test")
             description = "Performs the given operation on the given values and returns the result"
             request {
-                pathParameter<String>("operation") {
-                    description = "the math operation to perform. Either 'add' or 'sub'"
+                pathParameter<MathOp>("operation") {
+                    example = MathOp.add
                 }
+          //      pathParameter<String>("operation") {
+          //          description = "the math operation to perform. Either 'add' or 'sub'"
+          //      }
                 body<MathRequest>()
             }
             response {
@@ -90,13 +124,17 @@ fun Application.configureRouting() {
                 }
             }
         }) {
-            val operation = call.parameters["operation"]!!
-            call.receive<MathRequest>().let { request ->
-                when (operation) {
-                    "add" -> call.respond(HttpStatusCode.OK, MathResult(request.a + request.b))
-                    "sub" -> call.respond(HttpStatusCode.OK, MathResult(request.a - request.b))
-                    else -> call.respond(HttpStatusCode.BadRequest, Unit)
+            try {
+                val operation = call.parameters["operation"]!!
+                call.receive<MathRequest>().let { request ->
+                    when (operation) {
+                        "add" -> call.respond(HttpStatusCode.OK, MathResult(request.a + request.b))
+                        "sub" -> call.respond(HttpStatusCode.OK, MathResult(request.a - request.b))
+                        else -> call.respond(HttpStatusCode.BadRequest, Unit)
+                    }
                 }
+            } catch (ex: Exception) {
+                call.respond(HttpStatusCode.BadRequest, "General exception")
             }
         }
 
