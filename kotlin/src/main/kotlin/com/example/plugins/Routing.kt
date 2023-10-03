@@ -127,6 +127,29 @@ fun Application.configureRouting() {
             call.respondText("Hello my_p1= $p1,  my_p2= $p2")
         }
         //post<Customer>(){
+        post("/customers", {
+            description = "Submit new customer details"
+            request {
+                body<List<Customer>>()
+            }
+            response {
+                HttpStatusCode.OK to {
+                    description = "New multi customers submission was successful"
+                    body<String> {
+                        description = "Summary of customers created"
+                    }
+                }
+                HttpStatusCode.BadRequest to {
+                    description = "Customers could not be created"
+                }
+            }
+
+        } ) {
+
+           var custs = call.receive<List<Customer>>()
+            call.respondText("Customers received $custs",  status = HttpStatusCode.OK)
+        }
+
         post("/customer", {
             description = "Submit new customer details"
             request {
