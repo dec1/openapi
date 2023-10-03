@@ -99,11 +99,32 @@ fun Application.configureRouting() {
 
 
         ///_--------------------------------------------------------
-        get("/qstr") {
+        get("/qstr", {
+            request {
+                queryParameter<String>("my_p1") {
+                    description = "query param num 1"; required = true; allowEmptyValue = false; explode = false; allowReserved = false
+                }
+                queryParameter<Int>("my_p2") {
+                    description = "query param num 2"; required = false; allowEmptyValue = false; explode = false; allowReserved = false
+                }
+            }
+            response {
+                HttpStatusCode.OK to {
+                    description = "The query successful"
+                    body<String> {
+                        description = "echoes the query params"
+                    }
+                }
+                HttpStatusCode.BadRequest to {
+                    description = "An invalid query was provided"
+                }
+            }
+
+        }) {
             //val ct = call.request.contentType()
-            val p1 : Int?  =  call.parameters["my_p1"]?.toIntOrNull()
+            val p1 : String?  =  call.parameters["my_p1"]
             val p2 : Int? =  call.parameters["my_p2"]?.toIntOrNull()
-            call.respondText("Hello test $p1")
+            call.respondText("Hello my_p1= $p1,  my_p2= $p2")
         }
         //post<Customer>(){
         post("/customer", {
