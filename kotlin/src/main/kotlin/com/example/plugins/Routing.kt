@@ -60,7 +60,11 @@ fun Application.configureRouting() {
                 }
             }
         }) {
-            call.respondText("Hello World!")
+            //try {
+                call.respondText("Hello World!", status = HttpStatusCode.OK)
+            //} catch (ex: Exception) {
+            //}
+
         }
         //----------------------------------------------------------
         //curl -X "POST" "http://localhost:8080/math/add" -H "accept: application/json" -H "Content-Type: application/json" -d "{\"a\": 10, \"b\": 9}"
@@ -145,9 +149,14 @@ fun Application.configureRouting() {
             }
 
         } ) {
+            try {
+                var custs = call.receive<List<Customer>>()
+                call.respondText("Customers received $custs", status = HttpStatusCode.OK)
+            }
+            catch (ex: Exception) {
+                call.respond(HttpStatusCode.BadRequest, "General exception when submitting customers")
 
-           var custs = call.receive<List<Customer>>()
-            call.respondText("Customers received $custs",  status = HttpStatusCode.OK)
+            }
         }
 
         post("/customer", {
@@ -156,7 +165,7 @@ fun Application.configureRouting() {
                 body<Customer>()
             }
             response {
-                HttpStatusCode.OK to {
+                HttpStatusCode.Created to {
                     description = "New customer  submission was successful"
                     body<String> {
                         description = "Summary of customer created"
