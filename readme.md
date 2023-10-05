@@ -1,15 +1,24 @@
 ## Overview
 A minimal Kotlin (Ktor) http sever and python test client.
 The server uses [ktor-swagger-ui](https://github.com/SMILEY4/ktor-swagger-ui) to document the api
-within the kotlin (routing) code. This allows it to serve both a [swagger-ui](./screenshot/swagger-ui.png) of the API, and 
+within the [kotlin (routing) code](./kotlin/src/main/kotlin/com/example/plugins/Routing.kt). This allows it to serve both a [swagger-ui](./screenshot/swagger-ui.png) of the API, and 
 a corresponding [openapi spec](./screenshot/openapi.png), as additional endpoints.  
 
-The python client uses [schemathesis](https://schemathesis.readthedocs.io/en/) to test the api,
-trying to provoke a mismatch between the published openapi sepc and the actual running server
+The python client uses [schemathesis](https://schemathesis.readthedocs.io/en/) and property-based testing to query the api,
+trying to provoke a mismatch between the published openapi sepc and the actual running server.
+This helps verify that the server is adhering to the openapi spec it publishes.
 
 
 ### Usage
 * Run the Ktor server
+```
+.....
+2023-10-05 17:52:11.162 [main] DEBUG c.g.v.j.g.i.SchemaGenerationContextImpl - directly applying configured custom inline type for java.lang.String
+2023-10-05 17:52:11.163 [main] DEBUG c.g.v.j.g.i.SchemaGenerationContextImpl - storing configured custom inline type for java.lang.String as definition (since it is the main schema "#")
+2023-10-05 17:52:11.453 [DefaultDispatcher-worker-1] INFO  ktor.application - 
+Responding at http://localhost:8080
+```
+
 * Open http://localhost:8080 in [Browser](./screenshot/swagger-ui.png)
 * Run the python client either in 
     [pycharm](./screenshot/pycharm.png)
