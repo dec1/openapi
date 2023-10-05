@@ -1,9 +1,8 @@
 ## Overview
 A minimal Kotlin (Ktor) http sever and python test client.
 The server uses [ktor-swagger-ui](https://github.com/SMILEY4/ktor-swagger-ui) to document the api
-withing the kotlin (routing) code. This allows it to server a swagger-ui documentation of the API.
-It can also export corresponding [openapi spec](kotlin/src/main/resources/openapi/documentation.yaml) generated automatically from the server code via the intellij plugin.
-from the running server.
+within the kotlin (routing) code. This allows it to serve both a [swagger-ui](./screenshot/swagger-ui.png) of the API, and 
+a corresponding [openapi spec](./screenshot/openapi.png), as additional endpoints.  
 
 The python client uses [schemathesis](https://schemathesis.readthedocs.io/en/) to test the api,
 trying to provoke a mismatch between the published openapi sepc and the actual running server
@@ -14,7 +13,7 @@ trying to provoke a mismatch between the published openapi sepc and the actual r
 * Open http://localhost:8080 in [Browser](./screenshot/swagger-ui.png)
 * Run the python client either in 
     [pycharm](./screenshot/pycharm.png)
-    
+
 or on the command line
 
    ```python> ./prj/venv/bin/python -m  pytest -v [--capture=no] test/```
