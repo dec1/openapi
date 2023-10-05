@@ -1,29 +1,35 @@
 ## Overview
-A minimal Kotlin (Ktor) http sever and python client.
-The client reads the [openapi spec](kotlin/src/main/resources/openapi/documentation.yaml) generated automatically from the server code via the intellij plugin.
-It then peforms a smoke test, verifying that all endpoints documented in the spec exist and call succeeds.
-The results are collected in a pandas dataframe to facilitate  filtering, sorting
+A minimal Kotlin (Ktor) http sever and python test client.
+The server uses [ktor-swagger-ui](https://github.com/SMILEY4/ktor-swagger-ui) to document the api
+withing the kotlin (routing) code. This allows it to server a swagger-ui documentation of the API.
+It can also export corresponding [openapi spec](kotlin/src/main/resources/openapi/documentation.yaml) generated automatically from the server code via the intellij plugin.
+from the running server.
 
-_Note_: 
-Intellij also provides a graphical (swagger ui) view of the endpoints in the spec
-
+The python client uses [schemathesis](https://schemathesis.readthedocs.io/en/) to test the api,
+trying to provoke a mismatch between the published openapi sepc and the actual running server
 
 
 ### Usage
-* After editing any [Routes](kotlin/src/main/kotlin/com/example/plugins/Routing.kt), refresh the openapi spec
-eg right click on `routing {`, and choose  `Show Context Actions`.
-Note: The documentation can also be generated via a gradle task  (but this requires modification to build.gradle.kts)
-* (Re)Run server
-* Run the python client
+* Run the Ktor server
+* Open http://localhost:8080 in [Browser](./screenshot/swagger-ui.png)
+* Run the python client either in 
+    [pycharm](./screenshot/pycharm.png)
+    
+or on the command line
 
+   ```python> ./prj/venv/bin/python -m  pytest -v [--capture=no] test/```
 
-sample Output:
+    ========================================================================================== test session starts ===========================================================================================
+    platform darwin -- Python 3.10.7, pytest-7.4.2, pluggy-1.3.0 -- /Users/declan/Documents/zone/low/kotlin/open_api/python/prj/venv/bin/python
+    cachedir: .pytest_cache
+    hypothesis profile 'default' -> database=DirectoryBasedExampleDatabase('/Users/declan/Documents/zone/low/kotlin/open_api/python/.hypothesis/examples')
+    rootdir: /Users/declan/Documents/zone/low/kotlin/open_api/python
+    plugins: anyio-4.0.0, schemathesis-3.19.7, subtests-0.7.0, hypothesis-6.86.1
+    collected 6 items                                                                                                                                                                                        
 
-    -----------------------------
-    Failed 2 of 3 tests
-    -----------------------------
-    |    | Pass   | Method   | Path      |   Status_Code | Response_Text   |
-    |---:|:-------|:---------|:----------|--------------:|:----------------|
-    |  1 | False  | post     | /customer |           415 |                 |
-    |  2 | False  | get      | /qstr     |           404 |                 |
-    |  0 | True   | get      | /         |           200 | Hello null      |
+    test/test__api.py::test_api[GET /hello] PASSED                                                                                                                                                     [ 16%]
+    test/test__api.py::test_api[POST /echo/{color}] PASSED                                                                                                                                             [ 33%]
+    test/test__api.py::test_api[POST /math/{operation}] PASSED                                                                                                                                         [ 50%]
+    test/test__api.py::test_api[GET /qstr] PASSED                                                                                                                                                      [ 66%]
+    test/test__api.py::test_api[POST /customers] PASSED                                                                                                                                                [ 83%]
+    test/test__api.py::test_api[POST /customer] PASSED  
