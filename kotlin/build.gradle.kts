@@ -34,7 +34,15 @@ dependencies {
 
 
     implementation("io.ktor:ktor-server-content-negotiation-jvm")
-    implementation("io.ktor:ktor-serialization-kotlinx-json-jvm")
+
+    // ------------------------------------------------------------
+    // content negotiation:
+    //---------------------
+    // jackon
+    implementation("io.ktor:ktor-serialization-jackson:$ktor_version")
+    // kotlinx
+    // implementation("io.ktor:ktor-serialization-kotlinx-json-jvm")
+    // ------------------------------------------------------------
 
     //implementation("io.ktor:ktor-serialization:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")  // avoid warning "SLF4J: No SLF4J providers were found."

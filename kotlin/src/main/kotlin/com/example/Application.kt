@@ -1,10 +1,14 @@
 package com.example
 
 import com.example.plugins.configureRouting
-import com.example.plugins.configureRouting
-import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
+//----------------------------------------------
+// Content Negotiation
 import io.ktor.server.plugins.contentnegotiation.*
+// Kotlinx
+// import io.ktor.serialization.kotlinx.json.*
+// Jackson
+import io.ktor.serialization.jackson.*
 
 
 import io.github.smiley4.ktorswaggerui.SwaggerUI
@@ -44,7 +48,8 @@ fun main() {
 
 fun Application.module() {
     install(ContentNegotiation) {
-        json()
+       // json()
+        jackson()
     }
 
 
