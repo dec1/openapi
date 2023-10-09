@@ -43,6 +43,25 @@ fun Application.configureRouting() {
     //install(Resources)
     routing {
         //openAPI(path="openapi", swaggerFile = "openapi/documentation.yaml")
+        route("sub"){
+            get("hello2", {
+            description = "Hello World Endpoint 2."
+            response {
+                HttpStatusCode.OK to {
+                    description = "Successful Request 2"
+                    body<String> { description = "the response 2" }
+                }
+                HttpStatusCode.InternalServerError to {
+                    description = "Something unexpected happened 2"
+                }
+            }
+        }) {
+            //try {
+            call.respondText("Hello World!", status = HttpStatusCode.OK)
+            //} catch (ex: Exception) {
+            //}
+
+        }}
 
         get("/") {
             val n =  call.parameters["name"]
