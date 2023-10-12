@@ -41,8 +41,17 @@ def before_call(context, case):
     else:
         print("No request body for this case.")
 
+endpoints_to_test = [("/hello", "GET"), ]
+                 #    ("/endpoint2", "POST")]
+ENDPOINTS_AND_METHODS_TO_TEST = endpoints_to_test
 
-@settings(max_examples=25, derandomize=True)
-@schema.parametrize()
-def test_api(case):
-    case.call_and_validate()
+for endpoint, method in ENDPOINTS_AND_METHODS_TO_TEST:
+    @settings(max_examples=100, derandomize=True)
+    @schema.parametrize(endpoint=endpoint, method=method)
+    def test_api(case):
+        case.call_and_validate()
+
+# @settings(max_examples=25, derandomize=True)
+# @schema.parametrize()
+# def test_api(case):
+#     case.call_and_validate()
