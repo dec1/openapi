@@ -31,6 +31,8 @@ schema = schemathesis.from_uri("http://localhost:8080/swagger-ui/api.json", base
 
 @schemathesis.hook
 def before_call(context, case):
+    #case.call_and_validate(headers={"Authorization": "Bearer MY_TOKEN"})
+
     if case.query is not None:
         print(f"Query Parameters: {case.query}")
     else:
