@@ -8,6 +8,11 @@ The python client uses [schemathesis](https://schemathesis.readthedocs.io/en/) a
 trying to provoke a mismatch between the published openapi sepc and the actual running server.
 This helps verify that the server is adhering to the openapi spec it publishes.
 
+### Requirements
+#### Install Python 3.11+
+* Create Virtual Environment with necessary [packages](./python/prj/script/pip_reqs.txt)
+
+     `python/prj/script/venv_create.sh`
 
 ### Usage
 * Run the Ktor server
